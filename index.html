@@ -769,22 +769,56 @@ function guessCarrier(rawCode) {
 
 const OCR_STOPWORDS = [
   "USPS", "FEDEX", "UPS", "AMAZON", "WALMART", "PRIORITY", "MAIL", "EXPRESS",
-  "GROUND", "SHIP TO", "DELIVER TO", "FROM:", "SIGNATURE", "REQUIRED",
-  "STANDARD", "LOGISTICS", "FRAGILE", "THIS SIDE UP", "TRACKING", "WEIGHT",
+  "GROUND", "SIGNATURE", "REQUIRED", "STANDARD", "LOGISTICS", "FRAGILE",
+  "THIS SIDE UP", "TRACKING", "WEIGHT", "RETURN SERVICE", "POSTAGE", "PARCEL",
 ];
+
+// Words that mean "this is a street line", not a name — the #1 source of
+// false positives, since a plain street name (e.g. "FOREST ROAD") is
+// otherwise indistinguishable from a two-word name.
+const STREET_WORDS = [
+  "ROAD", "RD", "STREET", "ST", "AVENUE", "AVE", "BOULEVARD", "BLVD",
+  "LANE", "LN", "DRIVE", "DR", "COURT", "CT", "WAY", "PLACE", "PL",
+  "HIGHWAY", "HWY", "PARKWAY", "PKWY", "CIRCLE", "CIR", "TERRACE", "TER",
+  "SQUARE", "SQ", "LOOP", "TRAIL", "TRL", "SUITE", "STE", "APT", "UNIT",
+];
+
+function isLikelyName(line) {
+  const trimmed = line.trim();
+  const upper = trimmed.toUpperCase();
+  if (OCR_STOPWORDS.some((w) => upper.includes(w))) return false;
+  if (STREET_WORDS.some((w) => new RegExp(`\\b${w}\\b`).test(upper))) return false;
+  if (/\d/.test(trimmed)) return false; // house numbers / zips always have digits
+  const words = trimmed.split(/\s+/);
+  if (words.length < 2 || words.length > 4) return false;
+  if (!/^[A-Za-z][A-Za-z.'-]*(\s+[A-Za-z][A-Za-z.'-]*){1,3}$/.test(trimmed)) return false;
+  if (trimmed.length > 34) return false;
+  return true;
+}
 
 function guessName(ocrText) {
   if (!ocrText) return "";
   const lines = ocrText.split("\n").map((l) => l.trim()).filter(Boolean);
-  for (const line of lines) {
-    const upper = line.toUpperCase();
-    if (OCR_STOPWORDS.some((w) => upper.includes(w))) continue;
-    if (/\d/.test(line)) continue; // addresses/zips have digits, names don't
-    const words = line.split(/\s+/);
-    if (words.length < 2 || words.length > 4) continue;
-    if (!/^[A-Za-z][A-Za-z.'-]*(\s+[A-Za-z][A-Za-z.'-]*){1,3}$/.test(line)) continue;
-    if (line.length > 34) continue;
-    return line.replace(/\s+/g, " ").trim();
+
+  // Shipping labels often show more than one "…TO:" block (an intermediate
+  // hub, then the final "DELIVER TO"). Take the LAST one found — closest to
+  // the actual recipient — and only look at lines after it.
+  let anchorIdx = -1;
+  lines.forEach((line, i) => {
+    if (/(DELIVER\s*TO|SHIP\s*TO|SOLD\s*TO)\s*:?/i.test(line)) anchorIdx = i;
+  });
+
+  const candidates = [];
+  if (anchorIdx >= 0) {
+    const sameLine = lines[anchorIdx].match(/TO\s*:?\s*(.+)/i);
+    if (sameLine && sameLine[1]) candidates.push(sameLine[1]);
+    candidates.push(...lines.slice(anchorIdx + 1, anchorIdx + 4));
+  } else {
+    candidates.push(...lines);
+  }
+
+  for (const line of candidates) {
+    if (isLikelyName(line)) return line.replace(/\s+/g, " ").trim();
   }
   return "";
 }
