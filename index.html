@@ -129,7 +129,7 @@
     <header>
         <div>
             <h1>📦 Zone Packages Scanner</h1>
-            <p>Static Deployment Hub running on GitHub Pages</p>
+            <p>Static Deployment Engine running on GitHub Pages</p>
         </div>
         <button id="btn-reset" class="pill-button">
             🔄 Reset Database
@@ -146,7 +146,7 @@
                 <button id="btn-start" class="action-btn">Start Video</button>
                 <button id="btn-scan" class="action-btn" disabled>Scan Label</button>
             </div>
-            <div id="status" class="status-message">Static environment ready. No API key required.</div>
+            <div id="status" class="status-message">Static environment initialized. Ready to launch hardware loop...</div>
         </div>
 
         <div class="panel">
@@ -175,7 +175,6 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
     import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
 
-    // Standard public Web SDK config pointing directly to your live DB cluster
     const firebaseConfig = {
         apiKey: "AIzaSyDB3KKVpgRg_g7lu6ks-oqS1DyrfLplauw",
         authDomain: "zonepakages.firebaseapp.com",
@@ -197,7 +196,6 @@
     const app = initializeApp(firebaseConfig);
     const dbInstance = getDatabase(app);
 
-    // Syncing data in real-time right into your visual matrix rows
     onValue(ref(dbInstance, 'scans/'), (snapshot) => {
         const cloudPayload = snapshot.val() || {};
         renderTableData(cloudPayload);
@@ -207,12 +205,12 @@
     btnStart.addEventListener('click', async () => {
         try {
             const stream = await navigator.mediaDevices.getUserMedia({ 
-                video: { facingMode: "environment", width: { ideal: 1280 }, height: { ideal: 720 } } 
+                video: { facingMode: "environment", width: { ideal: 1920 }, height: { ideal: 1080 } } 
             });
             video.srcObject = stream;
             btnScan.disabled = false;
             btnStart.disabled = true;
-            statusDiv.innerText = "Camera linked. Align shipping label details in frame.";
+            statusDiv.innerText = "Camera active. Align shipping label details flat inside frame.";
         } catch (err) {
             statusDiv.innerText = "Webcam runtime failed: " + err.message;
         }
@@ -220,17 +218,20 @@
 
     btnScan.addEventListener('click', async () => {
         btnScan.disabled = true;
-        statusDiv.innerText = "Extracting text patterns locally via Tesseract Engine...";
+        statusDiv.innerText = "Enhancing text clarity via hardware matrix filters...";
 
-        canvas.width = video.videoWidth;
-        canvas.height = video.videoHeight;
+        // Double size rendering threshold to boost small font layouts dramatically
+        canvas.width = video.videoWidth * 2;
+        canvas.height = video.videoHeight * 2;
         const ctx = canvas.getContext('2d');
+        
+        // Render high-intensity contrast adjustments onto canvas layer
+        ctx.filter = 'grayscale(100%) contrast(180%) brightness(110%)';
         ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
         try {
-            // Process the canvas image purely inside the client browser instance
             const result = await Tesseract.recognize(canvas, 'eng', {
-                logger: m => { if(m.status === 'recognizing') statusDiv.innerText = `Analyzing: ${Math.round(m.progress * 100)}%`; }
+                logger: m => { if(m.status === 'recognizing') statusDiv.innerText = `Parsing Text Arrays: ${Math.round(m.progress * 100)}%`; }
             });
 
             const parsedText = result.data.text;
@@ -250,34 +251,54 @@
         }
     });
 
-    // Smart logic block to isolate tracking numbers and names from the raw text layout
+    // Highly optimized label string scanning block
     function parseLabelText(rawText) {
         const lines = rawText.split('\n').map(l => l.trim()).filter(l => l.length > 2);
         
         let trackingNumber = "UNKNOWN-TRACKING";
         let recipientName = "UNKNOWN RECIPIENT";
 
-        // Regex mapping pattern to grab typical carrier tracking footprints (UPS, FedEx, USPS)
+        // Upgraded tracking sequence match parameters (UPS, FedEx, USPS)
         const trackingRegex = /(1Z[A-Z0-9]{16}|[0-9]{4}\s[0-9]{4}\s[0-9]{4}\s[0-9]{4}|[0-9]{20,22}|[0-9]{12,15})/i;
 
         for (let line of lines) {
             const match = line.match(trackingRegex);
             if (match) {
-                trackingNumber = match[0].replace(/\s/g, "");
+                trackingNumber = match[0].replace(/\s/g, "").toUpperCase();
                 break;
             }
         }
 
-        // Filters out carrier technical words to find the primary delivery receiver name line
-        const filterWords = ["TRACKING", "FROM:", "SHIP TO:", "USPS", "FEDEX", "UPS", "DELIVERY", "PRIORITY", "WEIGHT"];
-        for (let line of lines) {
-            const upperLine = line.toUpperCase();
-            const containsFilter = filterWords.some(word => upperLine.includes(word));
-            if (!containsFilter && line.length > 3 && !line.match(/[0-9]{5}/)) {
-                recipientName = line.toUpperCase();
+        // Locate target coordinates for "SHIP TO" or "TO:" variations
+        let shipToLineIndex = -1;
+        for (let i = 0; i < lines.length; i++) {
+            const normalized = lines[i].toUpperCase().replace(/[\.\:\s]/g, "");
+            if (normalized.includes("SHIPTO") || normalized === "TO" || normalized.includes("DELIVERTO")) {
+                shipToLineIndex = i;
                 break;
             }
         }
+
+        // If landmark exists, grab the line directly below it
+        if (shipToLineIndex !== -1 && shipToLineIndex + 1 < lines.length) {
+            recipientName = lines[shipToLineIndex + 1].toUpperCase();
+        } else {
+            // Fallback sweep mode if "SHIP TO" line is unreadable or malformed
+            const systemExclusions = ["TRACKING", "FROM:", "SHIP TO", "USPS", "FEDEX", "UPS", "DELIVERY", "PRIORITY", "WEIGHT", "SUREPOST", "GROUND", "POSTAGE"];
+            for (let line of lines) {
+                const upperLine = line.toUpperCase();
+                const isSystemWord = systemExclusions.some(word => upperLine.includes(word));
+                
+                // Real human names on shipping labels typically contain text words without multi-digit postal zips or tracking strings
+                if (!isSystemWord && line.length > 4 && !line.match(/[0-9]{5}/) && !line.match(trackingRegex)) {
+                    recipientName = line.toUpperCase();
+                    break;
+                }
+            }
+        }
+
+        // Sanitize trailing special characters or broken artifacts
+        recipientName = recipientName.replace(/[^A-Z0-9\s\-\#]/gi, '').trim();
 
         return { recipientName, trackingNumber };
     }
