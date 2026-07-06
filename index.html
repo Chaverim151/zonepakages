@@ -59,32 +59,6 @@
             border-color: var(--danger-hover);
         }
 
-        .config-panel {
-            background: var(--surface);
-            padding: 16px;
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            margin-bottom: 20px;
-            display: flex;
-            flex-direction: column;
-            gap: 6px;
-        }
-
-        .config-panel label {
-            font-size: 13px;
-            font-weight: 600;
-            color: #4b5563;
-        }
-
-        .config-panel input {
-            padding: 8px 12px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 14px;
-            width: 100%;
-            box-sizing: border-box;
-        }
-
         .main-layout {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -138,7 +112,7 @@
         button.action-btn:hover { background: var(--primary-hover); }
         button:disabled { background: #9ca3af; cursor: not-allowed; }
 
-        .status-message { margin-top: 10px; font-size: 14px; font-weight: 500; color: #4b5563; }
+        .status-message { margin-top: 10px; font-size: 14px; font-weight: 500; color: #4b5563; word-break: break-word; }
 
         table { width: 100%; border-collapse: collapse; text-align: left; }
         th, td { padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 14px; }
@@ -147,6 +121,7 @@
         .tracking-list { font-size: 11px; color: #6b7280; margin: 0; padding-left: 16px; }
         #canvas-hidden { display: none; }
     </style>
+    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
 </head>
 <body>
 
@@ -154,17 +129,12 @@
     <header>
         <div>
             <h1>📦 Zone Packages Scanner</h1>
-            <p>Live package ingestion scanner powered by Firebase</p>
+            <p>Static Deployment Hub running on GitHub Pages</p>
         </div>
         <button id="btn-reset" class="pill-button">
             🔄 Reset Database
         </button>
     </header>
-
-    <div class="config-panel">
-        <label for="api-key">Gemini Authentication Token (AQ...)</label>
-        <input type="text" id="api-key" value="AQ.Ab8RN6JUvZf4U5f9XucXV1MtbT8PTngHqjSYdN5UlcQjmwT21A" placeholder="Token value loaded" />
-    </div>
 
     <div class="main-layout">
         <div class="panel">
@@ -176,7 +146,7 @@
                 <button id="btn-start" class="action-btn">Start Video</button>
                 <button id="btn-scan" class="action-btn" disabled>Scan Label</button>
             </div>
-            <div id="status" class="status-message">Initializing system parameters...</div>
+            <div id="status" class="status-message">Static environment ready. No API key required.</div>
         </div>
 
         <div class="panel">
@@ -205,6 +175,7 @@
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
     import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
 
+    // Standard public Web SDK config pointing directly to your live DB cluster
     const firebaseConfig = {
         apiKey: "AIzaSyDB3KKVpgRg_g7lu6ks-oqS1DyrfLplauw",
         authDomain: "zonepakages.firebaseapp.com",
@@ -221,12 +192,12 @@
     const btnScan = document.getElementById('btn-scan');
     const btnReset = document.getElementById('btn-reset');
     const statusDiv = document.getElementById('status');
-    const apiKeyInput = document.getElementById('api-key');
     const directoryBody = document.getElementById('directory-body');
 
     const app = initializeApp(firebaseConfig);
     const dbInstance = getDatabase(app);
 
+    // Syncing data in real-time right into your visual matrix rows
     onValue(ref(dbInstance, 'scans/'), (snapshot) => {
         const cloudPayload = snapshot.val() || {};
         renderTableData(cloudPayload);
@@ -241,86 +212,86 @@
             video.srcObject = stream;
             btnScan.disabled = false;
             btnStart.disabled = true;
-            statusDiv.innerText = "Camera linked. Align label text cleanly in viewport.";
+            statusDiv.innerText = "Camera linked. Align shipping label details in frame.";
         } catch (err) {
-            statusDiv.innerText = "Webcam runtime attachment failed.";
+            statusDiv.innerText = "Webcam runtime failed: " + err.message;
         }
     });
 
     btnScan.addEventListener('click', async () => {
-        const authToken = apiKeyInput.value.trim();
-        if (!authToken) {
-            alert("Auth token missing!");
-            return;
-        }
-
         btnScan.disabled = true;
-        statusDiv.innerText = "Analyzing target image via Gemini API...";
+        statusDiv.innerText = "Extracting text patterns locally via Tesseract Engine...";
 
         canvas.width = video.videoWidth;
         canvas.height = video.videoHeight;
-        canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
-        const base64Data = canvas.toDataURL('image/jpeg', 0.85).split(',')[1];
+        const ctx = canvas.getContext('2d');
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
 
         try {
-            const result = await processOCRData(authToken, base64Data);
-            if (result?.recipientName && result?.trackingNumber) {
-                await pushToFirebase(result.recipientName, result.trackingNumber);
-                statusDiv.innerText = `Successfully Logged: ${result.recipientName}`;
+            // Process the canvas image purely inside the client browser instance
+            const result = await Tesseract.recognize(canvas, 'eng', {
+                logger: m => { if(m.status === 'recognizing') statusDiv.innerText = `Analyzing: ${Math.round(m.progress * 100)}%`; }
+            });
+
+            const parsedText = result.data.text;
+            const extractedData = parseLabelText(parsedText);
+
+            if (extractedData.recipientName || extractedData.trackingNumber) {
+                await pushToFirebase(extractedData.recipientName, extractedData.trackingNumber);
+                statusDiv.innerText = `Logged Entry: ${extractedData.recipientName}`;
             } else {
-                statusDiv.innerText = "Could not parse clearly. Try adjusting lighting.";
+                statusDiv.innerText = "Scan completed but text patterns were blurry. Please try again.";
             }
         } catch (error) {
             console.error(error);
-            statusDiv.innerText = "API Parsing Failure. Verify account token credentials.";
+            statusDiv.innerText = "Local processing engine hit an asset parsing layout error.";
         } finally {
             btnScan.disabled = false;
         }
     });
 
+    // Smart logic block to isolate tracking numbers and names from the raw text layout
+    function parseLabelText(rawText) {
+        const lines = rawText.split('\n').map(l => l.trim()).filter(l => l.length > 2);
+        
+        let trackingNumber = "UNKNOWN-TRACKING";
+        let recipientName = "UNKNOWN RECIPIENT";
+
+        // Regex mapping pattern to grab typical carrier tracking footprints (UPS, FedEx, USPS)
+        const trackingRegex = /(1Z[A-Z0-9]{16}|[0-9]{4}\s[0-9]{4}\s[0-9]{4}\s[0-9]{4}|[0-9]{20,22}|[0-9]{12,15})/i;
+
+        for (let line of lines) {
+            const match = line.match(trackingRegex);
+            if (match) {
+                trackingNumber = match[0].replace(/\s/g, "");
+                break;
+            }
+        }
+
+        // Filters out carrier technical words to find the primary delivery receiver name line
+        const filterWords = ["TRACKING", "FROM:", "SHIP TO:", "USPS", "FEDEX", "UPS", "DELIVERY", "PRIORITY", "WEIGHT"];
+        for (let line of lines) {
+            const upperLine = line.toUpperCase();
+            const containsFilter = filterWords.some(word => upperLine.includes(word));
+            if (!containsFilter && line.length > 3 && !line.match(/[0-9]{5}/)) {
+                recipientName = line.toUpperCase();
+                break;
+            }
+        }
+
+        return { recipientName, trackingNumber };
+    }
+
     btnReset.addEventListener('click', async () => {
-        if (confirm("Are you sure you want to clear the entire daily package database?")) {
+        if (confirm("Are you sure you want to completely clear the package manifest?")) {
             try {
                 await set(ref(dbInstance, 'scans/'), null);
-                statusDiv.innerText = "Data log successfully wiped.";
+                statusDiv.innerText = "Database matrix reset successfully.";
             } catch (err) {
-                alert("Database wipe failed: " + err.message);
+                alert("Reset mapping execution failed: " + err.message);
             }
         }
     });
-
-    async function processOCRData(token, base64Image) {
-        // Direct endpoint structured without trailing key parameters
-        const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent`;
-        const schema = {
-            type: "OBJECT",
-            properties: {
-                recipientName: { type: "STRING", description: "The structured name matching the package receiver." },
-                trackingNumber: { type: "STRING", description: "The tracking code string key." }
-            },
-            required: ["recipientName", "trackingNumber"]
-        };
-
-        // Appending token explicitly as a secure Bearer token payload header element
-        const response = await fetch(endpoint, {
-            method: 'POST',
-            headers: { 
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify({
-                contents: [{ parts: [{ text: "Extract delivery name and absolute identifier barcode string matching tracking properties off this package label snapshot." }, { inlineData: { mimeType: "image/jpeg", data: base64Image } }] }],
-                generationConfig: { responseMimeType: "application/json", responseSchema: schema, temperature: 0.1 }
-            })
-        });
-
-        if (!response.ok) {
-            throw new Error(`API Connection Rejected: Status ${response.status}`);
-        }
-
-        const data = await response.json();
-        return JSON.parse(data.candidates[0].content.parts[0].text);
-    }
 
     async function pushToFirebase(name, trackingNum) {
         const cleanName = name.trim().toUpperCase().replace(/[\.\#\$\[\]]/g, "-");
@@ -332,23 +303,19 @@
 
     function renderTableData(dataStructure) {
         const sortedRecipients = Object.keys(dataStructure).sort();
-        
         if (sortedRecipients.length === 0) {
             directoryBody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: #9ca3af; padding: 20px;">No packages scanned yet today.</td></tr>`;
             return;
         }
-
         directoryBody.innerHTML = "";
         sortedRecipients.forEach(name => {
             const trackingMap = dataStructure[name];
             const trackingListArray = Object.keys(trackingMap);
             const absoluteCount = trackingListArray.length;
-
             let trackingElements = "";
             trackingListArray.forEach(trackID => {
                 trackingElements += `<li><code>${trackID}</code></li>`;
             });
-
             const row = document.createElement('tr');
             row.innerHTML = `
                 <td><strong>${name}</strong></td>
