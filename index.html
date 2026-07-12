@@ -1,351 +1,1277 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Zone Packages Scanner</title>
-    <style>
-        :root {
-            --primary: #4f46e5;
-            --primary-hover: #4338ca;
-            --background: #f9fafb;
-            --surface: #ffffff;
-            --text: #111827;
-            --border: #e5e7eb;
-            --danger: #ef4444;
-            --danger-hover: #dc2626;
-        }
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hatzolah of Middlesex County | Appreciation Gala RSVP</title>
+<style>
+  :root{
+    --navy-950:#0a1628;
+    --navy-900:#0f2038;
+    --navy-800:#152a47;
+    --navy-700:#1c3556;
+    --navy-600:#284570;
+    --gold-500:#c9a24b;
+    --gold-400:#d9b86a;
+    --gold-300:#e8cd8f;
+    --gold-100:#f5e9c9;
+    --cream:#f7f3e8;
+    --line:rgba(201,162,75,0.35);
+  }
 
-        body {
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-            background-color: var(--background);
-            color: var(--text);
-            margin: 0;
-            padding: 20px;
-        }
+  *{box-sizing:border-box;}
 
-        .container {
-            max-width: 1000px;
-            margin: 0 auto;
-        }
+  html,body{margin:0;padding:0;}
 
-        header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 24px;
-            flex-wrap: wrap;
-            gap: 16px;
-        }
+  body{
+    font-family: 'Georgia', 'Iowan Old Style', serif;
+    background:
+      radial-gradient(ellipse at 20% 0%, rgba(40,69,112,0.55), transparent 55%),
+      radial-gradient(ellipse at 85% 15%, rgba(201,162,75,0.10), transparent 45%),
+      linear-gradient(180deg, var(--navy-950) 0%, var(--navy-900) 45%, var(--navy-950) 100%);
+    color: var(--gold-100);
+    min-height:100vh;
+    position:relative;
+    overflow-x:hidden;
+  }
 
-        header div h1 { margin: 0; font-size: 28px; }
-        header div p { margin: 4px 0 0 0; color: #4b5563; }
+  /* subtle texture overlay */
+  body::before{
+    content:"";
+    position:fixed;
+    inset:0;
+    background-image:
+      repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0px, rgba(255,255,255,0.012) 1px, transparent 1px, transparent 3px);
+    pointer-events:none;
+    z-index:0;
+  }
 
-        .pill-button {
-            background-color: #fee2e2;
-            color: var(--danger);
-            border: 1px solid #fca5a5;
-            padding: 6px 16px;
-            border-radius: 9999px;
-            font-weight: 600;
-            font-size: 13px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
+  .stars{
+    position:fixed;
+    inset:0;
+    pointer-events:none;
+    z-index:0;
+  }
+  .stars span{
+    position:absolute;
+    width:2px;height:2px;
+    background:var(--gold-300);
+    border-radius:50%;
+    opacity:0.35;
+  }
 
-        .pill-button:hover {
-            background-color: var(--danger);
-            color: white;
-            border-color: var(--danger-hover);
-        }
+  .wrap{
+    position:relative;
+    z-index:1;
+    max-width:640px;
+    margin:0 auto;
+    padding:48px 22px 80px;
+  }
 
-        .main-layout {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 24px;
-        }
+  header.hero{
+    text-align:center;
+    padding-bottom:20px;
+  }
 
-        @media (max-width: 768px) {
-            .main-layout { grid-template-columns: 1fr; }
-        }
+  .crest{
+    width:118px;
+    height:auto;
+    margin:0 auto 22px;
+    display:block;
+    filter: drop-shadow(0 6px 18px rgba(0,0,0,0.45));
+  }
 
-        .panel {
-            background: var(--surface);
-            border-radius: 8px;
-            border: 1px solid var(--border);
-            padding: 20px;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.05);
-        }
+  .eyebrow{
+    letter-spacing:0.35em;
+    text-transform:uppercase;
+    font-size:12px;
+    color: var(--gold-400);
+    margin:0 0 10px;
+    font-family: 'Trebuchet MS', sans-serif;
+    opacity:0.9;
+  }
 
-        h2 {
-            margin-top: 0;
-            margin-bottom: 16px;
-            font-size: 18px;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 8px;
-        }
+  h1.title{
+    font-size:clamp(30px, 7vw, 44px);
+    line-height:1.15;
+    margin:0 0 6px;
+    color: var(--gold-300);
+    font-weight:400;
+    letter-spacing:0.02em;
+    text-shadow: 0 2px 20px rgba(201,162,75,0.25);
+  }
 
-        #video-container {
-            position: relative;
-            width: 100%;
-            background: #000;
-            border-radius: 6px;
-            overflow: hidden;
-            aspect-ratio: 4/3;
-        }
+  .subtitle{
+    font-size:16px;
+    color: var(--cream);
+    opacity:0.85;
+    margin:0 0 26px;
+    font-style:italic;
+  }
 
-        video { width: 100%; height: 100%; object-fit: cover; }
+  /* EKG animation */
+  .ekg-wrap{
+    width:100%;
+    max-width:420px;
+    margin:0 auto 24px;
+    height:56px;
+  }
+  .ekg-wrap svg{ width:100%; height:100%; overflow:visible; }
+  .ekg-line{
+    fill:none;
+    stroke:var(--gold-400);
+    stroke-width:2.5;
+    stroke-linecap:round;
+    stroke-linejoin:round;
+    stroke-dasharray: 900;
+    stroke-dashoffset: 900;
+    animation: draw-ekg 2.6s ease-out forwards;
+    filter: drop-shadow(0 0 6px rgba(217,184,106,0.5));
+  }
+  @keyframes draw-ekg{
+    to{ stroke-dashoffset: 0; }
+  }
 
-        .controls { margin-top: 12px; display: flex; gap: 8px; }
+  .divider{
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:14px;
+    margin:26px 0;
+    opacity:0.75;
+  }
+  .divider .ln{
+    height:1px;
+    flex:1;
+    background:linear-gradient(90deg, transparent, var(--gold-500), transparent);
+  }
+  .divider .diamond{
+    width:8px;height:8px;
+    background:var(--gold-500);
+    transform:rotate(45deg);
+    flex-shrink:0;
+  }
 
-        button.action-btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 10px 16px;
-            border-radius: 6px;
-            cursor: pointer;
-            font-weight: 500;
-            font-size: 14px;
-        }
+  /* Info panel */
+  .info-panel{
+    background: linear-gradient(160deg, rgba(28,53,86,0.55), rgba(15,32,56,0.55));
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:26px 22px;
+    margin-bottom:34px;
+    backdrop-filter: blur(6px);
+  }
+  .info-row{
+    display:flex;
+    align-items:flex-start;
+    gap:14px;
+    padding:11px 0;
+    border-bottom:1px solid rgba(201,162,75,0.15);
+  }
+  .info-row:last-child{ border-bottom:none; }
+  .info-paragraph{
+    margin:0;
+    font-size:16px;
+    line-height:1.7;
+    color:var(--cream);
+    text-align:center;
+  }
+  .info-paragraph strong{
+    color:var(--gold-300);
+    font-weight:400;
+  }
+  .info-icon{
+    width:34px;height:34px;
+    flex-shrink:0;
+    border-radius:50%;
+    background: rgba(201,162,75,0.12);
+    border:1px solid var(--line);
+    display:flex;align-items:center;justify-content:center;
+    color:var(--gold-400);
+  }
+  .info-icon svg{ width:17px; height:17px; }
+  .info-text .label{
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:10.5px;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--gold-500);
+    margin:0 0 3px;
+  }
+  .info-text .value{
+    font-size:16px;
+    color:var(--cream);
+    line-height:1.4;
+  }
 
-        button.action-btn:hover { background: var(--primary-hover); }
-        button:disabled { background: #9ca3af; cursor: not-allowed; }
+  /* Form card */
+  .card{
+    background: linear-gradient(160deg, rgba(28,53,86,0.55), rgba(15,32,56,0.65));
+    border:1px solid var(--line);
+    border-radius:18px;
+    padding:32px 24px;
+    box-shadow: 0 20px 50px rgba(0,0,0,0.35);
+  }
 
-        .status-message { margin-top: 10px; font-size: 14px; font-weight: 500; color: #4b5563; word-break: break-word; }
+  .card h2{
+    font-weight:400;
+    font-size:22px;
+    color:var(--gold-300);
+    text-align:center;
+    margin:0 0 6px;
+  }
+  .card .sub{
+    text-align:center;
+    font-size:13px;
+    color:var(--cream);
+    opacity:0.7;
+    margin:0 0 26px;
+    font-family:'Trebuchet MS', sans-serif;
+  }
 
-        table { width: 100%; border-collapse: collapse; text-align: left; }
-        th, td { padding: 10px 12px; border-bottom: 1px solid var(--border); font-size: 14px; }
-        th { background: #f3f4f6; font-weight: 600; }
+  .field{
+    margin-bottom:18px;
+  }
+  .field label{
+    display:block;
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:11px;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--gold-400);
+    margin-bottom:7px;
+  }
+  .field input[type=text]{
+    width:100%;
+    padding:13px 14px;
+    background:rgba(10,22,40,0.55);
+    border:1px solid var(--line);
+    border-radius:10px;
+    color:var(--gold-100);
+    font-family:'Georgia', serif;
+    font-size:15.5px;
+    outline:none;
+    transition: border-color .2s, box-shadow .2s;
+  }
+  .field input[type=text]::placeholder{ color:rgba(245,233,201,0.35); }
+  .field input[type=text]:focus{
+    border-color:var(--gold-400);
+    box-shadow:0 0 0 3px rgba(201,162,75,0.15);
+  }
 
-        .tracking-list { font-size: 11px; color: #6b7280; margin: 0; padding-left: 16px; }
-        #canvas-hidden { display: none; }
-    </style>
-    <script src="https://cdn.jsdelivr.net/npm/tesseract.js@5/dist/tesseract.min.js"></script>
+  .options{
+    display:flex;
+    flex-direction:column;
+    gap:10px;
+  }
+  .opt{
+    position:relative;
+  }
+  .opt input{
+    position:absolute;
+    opacity:0;
+    width:100%;height:100%;
+    top:0;left:0;
+    margin:0;
+    cursor:pointer;
+  }
+  .opt .box{
+    display:flex;
+    align-items:center;
+    gap:12px;
+    padding:14px 16px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    background:rgba(10,22,40,0.4);
+    transition: all .2s;
+  }
+  .opt .dot{
+    width:18px;height:18px;
+    border-radius:50%;
+    border:2px solid var(--gold-500);
+    flex-shrink:0;
+    position:relative;
+  }
+  .opt .dot::after{
+    content:"";
+    position:absolute;
+    inset:3px;
+    border-radius:50%;
+    background:var(--gold-400);
+    opacity:0;
+    transform:scale(0.5);
+    transition: all .15s;
+  }
+  .opt input:checked + .box{
+    border-color:var(--gold-400);
+    background:rgba(201,162,75,0.14);
+    box-shadow:0 0 0 3px rgba(201,162,75,0.12);
+  }
+  .opt input:checked + .box .dot::after{
+    opacity:1;
+    transform:scale(1);
+  }
+  .opt .box .txt{
+    font-size:15.5px;
+    color:var(--cream);
+  }
+  .opt .box .txt small{
+    display:block;
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:11.5px;
+    color:var(--gold-400);
+    opacity:0.75;
+    margin-top:2px;
+  }
+
+  button.submit-btn{
+    width:100%;
+    padding:15px;
+    margin-top:8px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(135deg, var(--gold-400), var(--gold-500));
+    color:var(--navy-950);
+    font-family:'Trebuchet MS', sans-serif;
+    font-weight:700;
+    font-size:14px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    cursor:pointer;
+    transition: transform .15s, box-shadow .15s, opacity .15s;
+    box-shadow: 0 10px 25px rgba(201,162,75,0.25);
+  }
+  button.submit-btn:hover{ transform:translateY(-1px); box-shadow:0 14px 30px rgba(201,162,75,0.35); }
+  button.submit-btn:active{ transform:translateY(0px); }
+  button.submit-btn:disabled{ opacity:0.6; cursor:not-allowed; transform:none; }
+
+  .error-msg{
+    color:#e8a2a2;
+    font-size:13px;
+    margin-top:-8px;
+    margin-bottom:14px;
+    display:none;
+    font-family:'Trebuchet MS', sans-serif;
+  }
+
+  /* Success screen */
+  .success{
+    display:none;
+    text-align:center;
+    padding:20px 6px 6px;
+  }
+  .success .check{
+    width:64px;height:64px;
+    margin:0 auto 18px;
+    border-radius:50%;
+    border:2px solid var(--gold-400);
+    display:flex;align-items:center;justify-content:center;
+    animation: pop .4s ease;
+  }
+  @keyframes pop{
+    0%{ transform:scale(0.5); opacity:0; }
+    100%{ transform:scale(1); opacity:1; }
+  }
+  .success .check svg{ width:28px;height:28px; stroke:var(--gold-300); }
+  .success h3{
+    color:var(--gold-300);
+    font-weight:400;
+    font-size:22px;
+    margin:0 0 10px;
+  }
+  .success p{
+    color:var(--cream);
+    opacity:0.85;
+    font-size:15px;
+    line-height:1.6;
+    margin:0 0 6px;
+  }
+
+  /* Calendar dropdown */
+  .cal-wrap{
+    position:relative;
+    margin-top:22px;
+  }
+  .cal-btn{
+    width:100%;
+    padding:13px;
+    border:1px solid var(--line);
+    border-radius:10px;
+    background:rgba(10,22,40,0.4);
+    color:var(--gold-300);
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:13px;
+    letter-spacing:0.06em;
+    cursor:pointer;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+  }
+  .cal-btn:hover{ border-color:var(--gold-400); }
+  .cal-menu{
+    display:none;
+    position:absolute;
+    top:calc(100% + 8px);
+    left:0;right:0;
+    background:var(--navy-800);
+    border:1px solid var(--line);
+    border-radius:10px;
+    overflow:hidden;
+    z-index:5;
+    box-shadow:0 10px 30px rgba(0,0,0,0.4);
+  }
+  .cal-menu.open{ display:block; }
+  .cal-menu a{
+    display:block;
+    padding:12px 16px;
+    color:var(--cream);
+    text-decoration:none;
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:14px;
+    border-bottom:1px solid rgba(201,162,75,0.12);
+  }
+  .cal-menu a:last-child{ border-bottom:none; }
+  .cal-menu a:hover{ background:rgba(201,162,75,0.1); }
+
+  footer{
+    text-align:center;
+    margin-top:38px;
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:11.5px;
+    letter-spacing:0.08em;
+    color:var(--gold-500);
+    opacity:0.6;
+  }
+
+  .admin-link{
+    display:inline-block;
+    margin-top:14px;
+    color:var(--gold-500);
+    opacity:0.45;
+    font-size:11px;
+    text-decoration:none;
+    letter-spacing:0.08em;
+  }
+  .admin-link:hover{ opacity:0.8; }
+
+  /* ---------- Admin ---------- */
+  #adminScreen{ display:none; }
+  .admin-shell{
+    max-width:980px;
+    margin:0 auto;
+    padding:40px 20px 80px;
+    position:relative;
+    z-index:1;
+  }
+  .admin-login{
+    max-width:380px;
+    margin:80px auto;
+    background: linear-gradient(160deg, rgba(28,53,86,0.6), rgba(15,32,56,0.7));
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:34px 26px;
+    text-align:center;
+  }
+  .admin-login h2{ color:var(--gold-300); font-weight:400; margin:0 0 20px; }
+  .admin-login input{
+    width:100%;
+    padding:12px 14px;
+    background:rgba(10,22,40,0.55);
+    border:1px solid var(--line);
+    border-radius:10px;
+    color:var(--gold-100);
+    font-size:15px;
+    margin-bottom:14px;
+    outline:none;
+    text-align:center;
+    letter-spacing:0.1em;
+  }
+  .admin-login input:focus{ border-color:var(--gold-400); }
+
+  .admin-header{
+    display:flex;
+    align-items:center;
+    justify-content:space-between;
+    flex-wrap:wrap;
+    gap:14px;
+    margin-bottom:26px;
+  }
+  .admin-header h1{
+    color:var(--gold-300);
+    font-weight:400;
+    font-size:26px;
+    margin:0;
+  }
+  .admin-header a{
+    color:var(--gold-500);
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:12px;
+    text-decoration:none;
+    letter-spacing:0.06em;
+    border:1px solid var(--line);
+    padding:8px 14px;
+    border-radius:8px;
+  }
+  .admin-header a:hover{ border-color:var(--gold-400); color:var(--gold-300); }
+
+  .stat-cards{
+    display:grid;
+    grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+    gap:14px;
+    margin-bottom:28px;
+  }
+  .stat-card{
+    background: linear-gradient(160deg, rgba(28,53,86,0.5), rgba(15,32,56,0.55));
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:18px;
+    text-align:center;
+  }
+  .stat-card .num{
+    font-size:30px;
+    color:var(--gold-300);
+    font-weight:400;
+  }
+  .stat-card .lbl{
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:10.5px;
+    letter-spacing:0.1em;
+    text-transform:uppercase;
+    color:var(--gold-500);
+    margin-top:4px;
+  }
+
+  .admin-toolbar{
+    display:flex;
+    gap:12px;
+    flex-wrap:wrap;
+    margin-bottom:18px;
+    align-items:center;
+  }
+  .admin-toolbar input[type=text]{
+    flex:1;
+    min-width:180px;
+    padding:10px 14px;
+    background:rgba(10,22,40,0.5);
+    border:1px solid var(--line);
+    border-radius:8px;
+    color:var(--gold-100);
+    font-size:14px;
+    outline:none;
+  }
+  .admin-toolbar select{
+    padding:10px 14px;
+    background:rgba(10,22,40,0.5);
+    border:1px solid var(--line);
+    border-radius:8px;
+    color:var(--gold-100);
+    font-size:14px;
+    outline:none;
+    font-family:'Trebuchet MS', sans-serif;
+  }
+  .admin-toolbar button{
+    padding:10px 16px;
+    background:transparent;
+    border:1px solid var(--gold-500);
+    color:var(--gold-400);
+    border-radius:8px;
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:12.5px;
+    letter-spacing:0.06em;
+    cursor:pointer;
+  }
+  .admin-toolbar button:hover{ background:rgba(201,162,75,0.1); }
+
+  .table-wrap{
+    background: linear-gradient(160deg, rgba(28,53,86,0.4), rgba(15,32,56,0.5));
+    border:1px solid var(--line);
+    border-radius:14px;
+    overflow:hidden;
+  }
+  table{
+    width:100%;
+    border-collapse:collapse;
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:13.5px;
+  }
+  thead th{
+    text-align:left;
+    padding:13px 16px;
+    background:rgba(10,22,40,0.5);
+    color:var(--gold-400);
+    font-size:11px;
+    letter-spacing:0.08em;
+    text-transform:uppercase;
+    border-bottom:1px solid var(--line);
+  }
+  tbody td{
+    padding:12px 16px;
+    color:var(--cream);
+    border-bottom:1px solid rgba(201,162,75,0.1);
+  }
+  tbody tr:last-child td{ border-bottom:none; }
+  tbody tr:hover{ background:rgba(201,162,75,0.05); }
+  .badge{
+    display:inline-block;
+    padding:4px 10px;
+    border-radius:20px;
+    font-size:11px;
+    letter-spacing:0.04em;
+  }
+  .badge.yes{ background:rgba(120,190,140,0.15); color:#9fdcaa; }
+  .badge.spouse{ background:rgba(201,162,75,0.18); color:var(--gold-300); }
+  .badge.no{ background:rgba(220,120,120,0.15); color:#e8a2a2; }
+  .del-btn{
+    background:none;
+    border:none;
+    color:#e8a2a2;
+    cursor:pointer;
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:12px;
+    opacity:0.6;
+  }
+  .del-btn:hover{ opacity:1; }
+  .edit-btn{
+    background:none;
+    border:none;
+    color:var(--gold-400);
+    cursor:pointer;
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:12px;
+    opacity:0.75;
+    margin-right:14px;
+  }
+  .edit-btn:hover{ opacity:1; }
+  .row-actions{ display:flex; align-items:center; }
+  .save-btn{
+    background:none;
+    border:none;
+    color:#9fdcaa;
+    cursor:pointer;
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:12px;
+    opacity:0.85;
+    margin-right:14px;
+  }
+  .save-btn:hover{ opacity:1; }
+  .cancel-btn{
+    background:none;
+    border:none;
+    color:var(--cream);
+    cursor:pointer;
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:12px;
+    opacity:0.6;
+  }
+  .cancel-btn:hover{ opacity:1; }
+  tr.editing-row{ background:rgba(201,162,75,0.06); }
+  .edit-input{
+    width:100%;
+    padding:7px 9px;
+    background:rgba(10,22,40,0.6);
+    border:1px solid var(--line);
+    border-radius:6px;
+    color:var(--gold-100);
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:13px;
+    outline:none;
+  }
+  .edit-input:focus{ border-color:var(--gold-400); }
+  select.edit-input{ cursor:pointer; }
+
+  .empty-state{
+    text-align:center;
+    padding:50px 20px;
+    color:var(--cream);
+    opacity:0.5;
+    font-family:'Trebuchet MS', sans-serif;
+    font-size:13px;
+  }
+
+  @media (max-width:640px){
+    .wrap{ padding:32px 16px 60px; }
+    .card{ padding:26px 18px; }
+    thead{ display:none; }
+    table, tbody, tr, td{ display:block; width:100%; }
+    tbody tr{
+      border-bottom:1px solid var(--line);
+      padding:12px 16px;
+    }
+    tbody td{
+      border:none;
+      padding:5px 0;
+      display:flex;
+      justify-content:space-between;
+      gap:10px;
+    }
+    tbody td::before{
+      content: attr(data-label);
+      color:var(--gold-500);
+      font-size:10.5px;
+      text-transform:uppercase;
+      letter-spacing:0.06em;
+      flex-shrink:0;
+    }
+  }
+</style>
 </head>
 <body>
 
-<div class="container">
-    <header>
-        <div>
-            <h1>📦 Zone Packages Scanner</h1>
-            <p>Static Deployment Engine running on GitHub Pages</p>
-        </div>
-        <button id="btn-reset" class="pill-button">
-            🔄 Reset Database
-        </button>
-    </header>
+<div class="stars" id="stars"></div>
 
-    <div class="main-layout">
-        <div class="panel">
-            <h2>Scanner Window</h2>
-            <div id="video-container">
-                <video id="webcam" autoplay playsinline muted></video>
-            </div>
-            <div class="controls">
-                <button id="btn-start" class="action-btn">Start Video</button>
-                <button id="btn-scan" class="action-btn" disabled>Scan Label</button>
-            </div>
-            <div id="status" class="status-message">Static environment initialized. Ready to launch hardware loop...</div>
-        </div>
+<!-- ============ RSVP SCREEN ============ -->
+<div id="rsvpScreen" class="wrap">
 
-        <div class="panel">
-            <h2>Daily Recipients</h2>
-            <table>
-                <thead>
-                    <tr>
-                        <th>Recipient Name</th>
-                        <th style="width: 80px; text-align: center;">Count</th>
-                        <th>Tracking Keys</th>
-                    </tr>
-                </thead>
-                <tbody id="directory-body">
-                    <tr>
-                        <td colspan="3" style="text-align: center; color: #9ca3af; padding: 20px;">Connecting to Live Matrix...</td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
+  <header class="hero">
+    <img class="crest" src="https://i.ibb.co/j40wTVT/hatzolah-middelessex-county-final-removebg-preview-1-20231129-233435-0000.png" alt="Hatzolah of Middlesex County">
+    <p class="eyebrow">Save the Date</p>
+    <h1 class="title">Hatzolah of Middlesex<br>County</h1>
+    <p class="subtitle">Appreciation Gala &mdash; Sunday, August 16, 2026</p>
+
+    <div class="ekg-wrap">
+      <svg viewBox="0 0 420 56" preserveAspectRatio="none">
+        <path class="ekg-line" d="M0,28 L60,28 L75,28 L85,10 L95,46 L105,28 L120,28 L130,18 L140,38 L150,28 L165,28 L180,28 L195,8 L210,50 L225,28 L245,28 L260,28 L270,20 L280,36 L290,28 L305,28 L420,28"/>
+      </svg>
     </div>
+
+    <div class="divider"><span class="ln"></span><span class="diamond"></span><span class="ln"></span></div>
+  </header>
+
+  <div class="info-panel">
+    <p class="info-paragraph">Join us on <strong>Sunday, August 16, 2026</strong> from <strong>7:00&nbsp;PM&ndash;10:00&nbsp;PM</strong> at <strong>Chabad of Rutgers, 170 College Ave, New Brunswick</strong>, as we come together to honor our dedicated Hatzolah of Middlesex County volunteers.</p>
+  </div>
+
+  <!-- Form Card -->
+  <div class="card" id="formCard">
+    <h2>Please RSVP</h2>
+    <p class="sub">Kindly confirm your attendance below</p>
+
+    <form id="rsvpForm" novalidate>
+      <div class="field">
+        <label for="firstName">First Name</label>
+        <input type="text" id="firstName" placeholder="First name" autocomplete="given-name" required>
+      </div>
+      <div class="field">
+        <label for="lastName">Last Name</label>
+        <input type="text" id="lastName" placeholder="Last name" autocomplete="family-name" required>
+      </div>
+
+      <div class="field">
+        <label>Will you be attending?</label>
+        <div class="options">
+          <div class="opt">
+            <input type="radio" name="attendance" id="optYes" value="attending">
+            <div class="box"><span class="dot"></span><span class="txt">Attending<small>I'll be there</small></span></div>
+          </div>
+          <div class="opt">
+            <input type="radio" name="attendance" id="optSpouse" value="attending_spouse">
+            <div class="box"><span class="dot"></span><span class="txt">Attending with Spouse<small>Two of us will attend</small></span></div>
+          </div>
+          <div class="opt">
+            <input type="radio" name="attendance" id="optNo" value="not_attending">
+            <div class="box"><span class="dot"></span><span class="txt">Unable to Attend<small>Sorry, I'll miss it</small></span></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="error-msg" id="errorMsg"></div>
+
+      <button type="submit" class="submit-btn" id="submitBtn">Submit RSVP</button>
+    </form>
+  </div>
+
+  <!-- Success card -->
+  <div class="card success" id="successCard">
+    <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+    <h3>You're All Set!</h3>
+    <p id="successMsg">Thank you for confirming your attendance.</p>
+    <p style="opacity:0.6;font-size:13px;">We look forward to celebrating with you.</p>
+
+    <div class="cal-wrap">
+      <button class="cal-btn" id="calBtn">+ Add to Calendar</button>
+      <div class="cal-menu" id="calMenu">
+        <a id="googleCalLink" href="#" target="_blank" rel="noopener">Google Calendar</a>
+        <a id="icsLink" href="#" download="Hatzolah-Appreciation-Gala.ics">Apple / Outlook (.ics)</a>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    Hatzolah of Middlesex County Emergency Medical Services
+    <br>
+    <a href="#" class="admin-link" id="adminLink">Admin</a>
+  </footer>
 </div>
 
-<canvas id="canvas-hidden"></canvas>
+<!-- ============ ADMIN SCREEN ============ -->
+<div id="adminScreen">
+  <div class="admin-shell">
 
-<script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-app.js";
-    import { getDatabase, ref, set, onValue } from "https://www.gstatic.com/firebasejs/11.0.1/firebase-database.js";
+    <div id="adminLoginWrap" class="admin-login">
+      <h2>Admin Access</h2>
+      <input type="password" id="adminPass" placeholder="Enter password">
+      <button class="submit-btn" id="adminLoginBtn" type="button">Enter</button>
+      <div class="error-msg" id="adminError" style="margin-top:12px;"></div>
+    </div>
 
-    const firebaseConfig = {
-        apiKey: "AIzaSyDB3KKVpgRg_g7lu6ks-oqS1DyrfLplauw",
-        authDomain: "zonepakages.firebaseapp.com",
-        databaseURL: "https://zonepakages-default-rtdb.firebaseio.com",
-        projectId: "zonepakages",
-        storageBucket: "zonepakages.firebasestorage.app",
-        messagingSenderId: "962679315077",
-        appId: "1:962679315077:web:9ca46b56b670bb268467ec"
+    <div id="adminDashboard" style="display:none;">
+      <div class="admin-header">
+        <h1>RSVP Dashboard</h1>
+        <a href="#" id="backToRsvp">&larr; Back to RSVP Page</a>
+      </div>
+
+      <div class="stat-cards">
+        <div class="stat-card"><div class="num" id="statAttending">0</div><div class="lbl">Attending</div></div>
+        <div class="stat-card"><div class="num" id="statAttendingSpouse">0</div><div class="lbl">Attending w/ Spouse</div></div>
+        <div class="stat-card"><div class="num" id="statTotal">0</div><div class="lbl">Total Submissions</div></div>
+        <div class="stat-card"><div class="num" id="statGuests">0</div><div class="lbl">Total Guests</div></div>
+      </div>
+
+      <div class="admin-toolbar">
+        <input type="text" id="searchInput" placeholder="Search by name...">
+        <select id="filterSelect">
+          <option value="all">All Responses</option>
+          <option value="attending">Attending</option>
+          <option value="attending_spouse">Attending with Spouse</option>
+          <option value="not_attending">Not Attending</option>
+        </select>
+        <button id="exportBtn">Export CSV</button>
+        <button id="refreshBtn">Refresh</button>
+      </div>
+
+      <div class="table-wrap">
+        <table id="rsvpTable">
+          <thead>
+            <tr>
+              <th>Name</th>
+              <th>Status</th>
+              <th>Guests</th>
+              <th>Submitted</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody id="rsvpTableBody"></tbody>
+        </table>
+        <div class="empty-state" id="emptyState" style="display:none;">No RSVPs yet.</div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Firebase -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-database-compat.js"></script>
+
+<script>
+  // ---- Firebase config ----
+  const firebaseConfig = {
+    apiKey: "AIzaSyD5wDh4mlEFXQC9DsYjLcQdIUCfbZV58kY",
+    authDomain: "event-rsvp-1d2d0.firebaseapp.com",
+    databaseURL: "https://event-rsvp-1d2d0-default-rtdb.firebaseio.com",
+    projectId: "event-rsvp-1d2d0",
+    storageBucket: "event-rsvp-1d2d0.firebasestorage.app",
+    messagingSenderId: "1094116985516",
+    appId: "1:1094116985516:web:aeef23b2367e9fda6d6d09"
+  };
+  firebase.initializeApp(firebaseConfig);
+  const db = firebase.database();
+  const rsvpsRef = db.ref('rsvps');
+
+  const ADMIN_PASSWORD = "2026event";
+
+  // ---- Background stars ----
+  (function(){
+    const starsEl = document.getElementById('stars');
+    const frag = document.createDocumentFragment();
+    for(let i=0;i<50;i++){
+      const s = document.createElement('span');
+      s.style.left = Math.random()*100+'%';
+      s.style.top = Math.random()*100+'%';
+      s.style.opacity = (Math.random()*0.5+0.1).toFixed(2);
+      const size = (Math.random()*1.5+1).toFixed(1);
+      s.style.width = size+'px';
+      s.style.height = size+'px';
+      frag.appendChild(s);
+    }
+    starsEl.appendChild(frag);
+  })();
+
+  // ---- Attendance option styling handled via CSS :checked ----
+
+  // ---- Form submit ----
+  const form = document.getElementById('rsvpForm');
+  const errorMsg = document.getElementById('errorMsg');
+  const submitBtn = document.getElementById('submitBtn');
+
+  form.addEventListener('submit', function(e){
+    e.preventDefault();
+    errorMsg.style.display = 'none';
+
+    const firstName = document.getElementById('firstName').value.trim();
+    const lastName = document.getElementById('lastName').value.trim();
+    const attendanceEl = document.querySelector('input[name="attendance"]:checked');
+
+    if(!firstName || !lastName){
+      showError('Please enter your first and last name.');
+      return;
+    }
+    if(!attendanceEl){
+      showError('Please select your attendance status.');
+      return;
+    }
+
+    submitBtn.disabled = true;
+    submitBtn.textContent = 'Checking...';
+
+    const entry = {
+      firstName,
+      lastName,
+      attendance: attendanceEl.value,
+      timestamp: Date.now()
     };
 
-    const video = document.getElementById('webcam');
-    const canvas = document.getElementById('canvas-hidden');
-    const btnStart = document.getElementById('btn-start');
-    const btnScan = document.getElementById('btn-scan');
-    const btnReset = document.getElementById('btn-reset');
-    const statusDiv = document.getElementById('status');
-    const directoryBody = document.getElementById('directory-body');
+    rsvpsRef.once('value')
+      .then((snapshot)=>{
+        const data = snapshot.val() || {};
+        const normFirst = normalizeName(firstName);
+        const normLast = normalizeName(lastName);
+        const existingId = Object.keys(data).find(key =>
+          normalizeName(data[key].firstName) === normFirst && normalizeName(data[key].lastName) === normLast
+        );
 
-    const app = initializeApp(firebaseConfig);
-    const dbInstance = getDatabase(app);
+        if(existingId){
+          submitBtn.disabled = false;
+          submitBtn.textContent = 'Submit RSVP';
 
-    onValue(ref(dbInstance, 'scans/'), (snapshot) => {
-        const cloudPayload = snapshot.val() || {};
-        renderTableData(cloudPayload);
-        statusDiv.innerText = "Database Connected & Live.";
-    });
-
-    btnStart.addEventListener('click', async () => {
-        try {
-            const stream = await navigator.mediaDevices.getUserMedia({ 
-                video: { facingMode: "environment", width: { ideal: 1920 }, height: { ideal: 1080 } } 
-            });
-            video.srcObject = stream;
-            btnScan.disabled = false;
-            btnStart.disabled = true;
-            statusDiv.innerText = "Camera active. Align shipping label details flat inside frame.";
-        } catch (err) {
-            statusDiv.innerText = "Webcam runtime failed: " + err.message;
-        }
-    });
-
-    btnScan.addEventListener('click', async () => {
-        btnScan.disabled = true;
-        statusDiv.innerText = "Enhancing text clarity via hardware matrix filters...";
-
-        // Double size rendering threshold to boost small font layouts dramatically
-        canvas.width = video.videoWidth * 2;
-        canvas.height = video.videoHeight * 2;
-        const ctx = canvas.getContext('2d');
-        
-        // Render high-intensity contrast adjustments onto canvas layer
-        ctx.filter = 'grayscale(100%) contrast(180%) brightness(110%)';
-        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
-
-        try {
-            const result = await Tesseract.recognize(canvas, 'eng', {
-                logger: m => { if(m.status === 'recognizing') statusDiv.innerText = `Parsing Text Arrays: ${Math.round(m.progress * 100)}%`; }
-            });
-
-            const parsedText = result.data.text;
-            const extractedData = parseLabelText(parsedText);
-
-            if (extractedData.recipientName || extractedData.trackingNumber) {
-                await pushToFirebase(extractedData.recipientName, extractedData.trackingNumber);
-                statusDiv.innerText = `Logged Entry: ${extractedData.recipientName}`;
-            } else {
-                statusDiv.innerText = "Scan completed but text patterns were blurry. Please try again.";
-            }
-        } catch (error) {
-            console.error(error);
-            statusDiv.innerText = "Local processing engine hit an asset parsing layout error.";
-        } finally {
-            btnScan.disabled = false;
-        }
-    });
-
-    // Highly optimized label string scanning block
-    function parseLabelText(rawText) {
-        const lines = rawText.split('\n').map(l => l.trim()).filter(l => l.length > 2);
-        
-        let trackingNumber = "UNKNOWN-TRACKING";
-        let recipientName = "UNKNOWN RECIPIENT";
-
-        // Upgraded tracking sequence match parameters (UPS, FedEx, USPS)
-        const trackingRegex = /(1Z[A-Z0-9]{16}|[0-9]{4}\s[0-9]{4}\s[0-9]{4}\s[0-9]{4}|[0-9]{20,22}|[0-9]{12,15})/i;
-
-        for (let line of lines) {
-            const match = line.match(trackingRegex);
-            if (match) {
-                trackingNumber = match[0].replace(/\s/g, "").toUpperCase();
-                break;
-            }
-        }
-
-        // Locate target coordinates for "SHIP TO" or "TO:" variations
-        let shipToLineIndex = -1;
-        for (let i = 0; i < lines.length; i++) {
-            const normalized = lines[i].toUpperCase().replace(/[\.\:\s]/g, "");
-            if (normalized.includes("SHIPTO") || normalized === "TO" || normalized.includes("DELIVERTO")) {
-                shipToLineIndex = i;
-                break;
-            }
-        }
-
-        // If landmark exists, grab the line directly below it
-        if (shipToLineIndex !== -1 && shipToLineIndex + 1 < lines.length) {
-            recipientName = lines[shipToLineIndex + 1].toUpperCase();
-        } else {
-            // Fallback sweep mode if "SHIP TO" line is unreadable or malformed
-            const systemExclusions = ["TRACKING", "FROM:", "SHIP TO", "USPS", "FEDEX", "UPS", "DELIVERY", "PRIORITY", "WEIGHT", "SUREPOST", "GROUND", "POSTAGE"];
-            for (let line of lines) {
-                const upperLine = line.toUpperCase();
-                const isSystemWord = systemExclusions.some(word => upperLine.includes(word));
-                
-                // Real human names on shipping labels typically contain text words without multi-digit postal zips or tracking strings
-                if (!isSystemWord && line.length > 4 && !line.match(/[0-9]{5}/) && !line.match(trackingRegex)) {
-                    recipientName = line.toUpperCase();
-                    break;
-                }
-            }
-        }
-
-        // Sanitize trailing special characters or broken artifacts
-        recipientName = recipientName.replace(/[^A-Z0-9\s\-\#]/gi, '').trim();
-
-        return { recipientName, trackingNumber };
-    }
-
-    btnReset.addEventListener('click', async () => {
-        if (confirm("Are you sure you want to completely clear the package manifest?")) {
-            try {
-                await set(ref(dbInstance, 'scans/'), null);
-                statusDiv.innerText = "Database matrix reset successfully.";
-            } catch (err) {
-                alert("Reset mapping execution failed: " + err.message);
-            }
-        }
-    });
-
-    async function pushToFirebase(name, trackingNum) {
-        const cleanName = name.trim().toUpperCase().replace(/[\.\#\$\[\]]/g, "-");
-        const cleanTrack = trackingNum.trim().toUpperCase().replace(/[\.\#\$\[\]]/g, "-");
-        
-        const writeReference = ref(dbInstance, `scans/${cleanName}/${cleanTrack}`);
-        await set(writeReference, true);
-    }
-
-    function renderTableData(dataStructure) {
-        const sortedRecipients = Object.keys(dataStructure).sort();
-        if (sortedRecipients.length === 0) {
-            directoryBody.innerHTML = `<tr><td colspan="3" style="text-align: center; color: #9ca3af; padding: 20px;">No packages scanned yet today.</td></tr>`;
+          const wantsUpdate = confirm("It looks like you've already RSVP'd. Would you like to update your existing response?");
+          if(!wantsUpdate){
             return;
+          }
+
+          submitBtn.disabled = true;
+          submitBtn.textContent = 'Updating...';
+          return rsvpsRef.child(existingId).update({
+            firstName,
+            lastName,
+            attendance: attendanceEl.value,
+            timestamp: Date.now()
+          }).then(()=>{
+            showSuccess(entry);
+          });
         }
-        directoryBody.innerHTML = "";
-        sortedRecipients.forEach(name => {
-            const trackingMap = dataStructure[name];
-            const trackingListArray = Object.keys(trackingMap);
-            const absoluteCount = trackingListArray.length;
-            let trackingElements = "";
-            trackingListArray.forEach(trackID => {
-                trackingElements += `<li><code>${trackID}</code></li>`;
-            });
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td><strong>${name}</strong></td>
-                <td style="text-align: center; font-weight: bold; color: var(--primary);">${absoluteCount}</td>
-                <td><ul class="tracking-list">${trackingElements}</ul></td>
-            `;
-            directoryBody.appendChild(row);
+
+        submitBtn.textContent = 'Submitting...';
+        return rsvpsRef.push(entry).then(()=>{
+          showSuccess(entry);
         });
+      })
+      .catch((err)=>{
+        submitBtn.disabled = false;
+        submitBtn.textContent = 'Submit RSVP';
+        showError('Something went wrong submitting your RSVP. Please try again.');
+        console.error(err);
+      });
+  });
+
+  function normalizeName(str){
+    return (str || '').trim().toLowerCase().replace(/\s+/g, ' ');
+  }
+
+  function showError(msg){
+    errorMsg.textContent = msg;
+    errorMsg.style.display = 'block';
+  }
+
+  function showSuccess(entry){
+    document.getElementById('formCard').style.display = 'none';
+    const successCard = document.getElementById('successCard');
+    successCard.style.display = 'block';
+
+    const msgEl = document.getElementById('successMsg');
+    if(entry.attendance === 'not_attending'){
+      msgEl.textContent = "Thank you for letting us know. You'll be missed!";
+      document.querySelector('.cal-wrap').style.display = 'none';
+    } else {
+      const guestText = entry.attendance === 'attending_spouse' ? ' and your spouse' : '';
+      msgEl.textContent = `Thank you, ${entry.firstName}${guestText}! We look forward to seeing you.`;
+      setupCalendarLinks();
     }
+  }
+
+  function setupCalendarLinks(){
+    // Event: Aug 16 2026, 7:00 PM - 10:00 PM ET
+    const startUTC = "20260816T230000Z"; // 7:00 PM EDT = 23:00 UTC
+    const endUTC = "20260817T020000Z";   // 10:00 PM EDT = 02:00 UTC next day
+
+    const title = encodeURIComponent("Hatzolah of Middlesex County Appreciation Gala");
+    const details = encodeURIComponent("Hatzolah of Middlesex County Appreciation Gala honoring our dedicated volunteers.");
+    const location = encodeURIComponent("Chabad of Rutgers, 170 College Ave, New Brunswick, NJ");
+
+    const gcalUrl = `https://calendar.google.com/calendar/render?action=TEMPLATE&text=${title}&dates=${startUTC}/${endUTC}&details=${details}&location=${location}`;
+    document.getElementById('googleCalLink').href = gcalUrl;
+
+    const icsContent = [
+      'BEGIN:VCALENDAR',
+      'VERSION:2.0',
+      'PRODID:-//Hatzolah MC//Appreciation Gala//EN',
+      'BEGIN:VEVENT',
+      `UID:${Date.now()}@hatzolahmc.org`,
+      `DTSTAMP:${startUTC}`,
+      `DTSTART:${startUTC}`,
+      `DTEND:${endUTC}`,
+      'SUMMARY:Hatzolah of Middlesex County Appreciation Gala',
+      'DESCRIPTION:Hatzolah of Middlesex County Appreciation Gala honoring our dedicated volunteers.',
+      'LOCATION:Chabad of Rutgers\\, 170 College Ave\\, New Brunswick\\, NJ',
+      'END:VEVENT',
+      'END:VCALENDAR'
+    ].join('\r\n');
+
+    const blob = new Blob([icsContent], {type: 'text/calendar'});
+    const icsUrl = URL.createObjectURL(blob);
+    document.getElementById('icsLink').href = icsUrl;
+  }
+
+  const calBtn = document.getElementById('calBtn');
+  const calMenu = document.getElementById('calMenu');
+  calBtn.addEventListener('click', ()=>{ calMenu.classList.toggle('open'); });
+  document.addEventListener('click', (e)=>{
+    if(!calBtn.contains(e.target) && !calMenu.contains(e.target)){
+      calMenu.classList.remove('open');
+    }
+  });
+
+  // ---- Admin ----
+  const rsvpScreen = document.getElementById('rsvpScreen');
+  const adminScreen = document.getElementById('adminScreen');
+  const adminLoginWrap = document.getElementById('adminLoginWrap');
+  const adminDashboard = document.getElementById('adminDashboard');
+
+  document.getElementById('adminLink').addEventListener('click', (e)=>{
+    e.preventDefault();
+    rsvpScreen.style.display = 'none';
+    adminScreen.style.display = 'block';
+    window.scrollTo(0,0);
+  });
+
+  document.getElementById('backToRsvp').addEventListener('click', (e)=>{
+    e.preventDefault();
+    adminScreen.style.display = 'none';
+    rsvpScreen.style.display = 'block';
+    window.scrollTo(0,0);
+  });
+
+  function attemptAdminLogin(){
+    const val = document.getElementById('adminPass').value;
+    const errEl = document.getElementById('adminError');
+    if(val === ADMIN_PASSWORD){
+      errEl.style.display = 'none';
+      adminLoginWrap.style.display = 'none';
+      adminDashboard.style.display = 'block';
+      loadRsvps();
+    } else {
+      errEl.textContent = 'Incorrect password.';
+      errEl.style.display = 'block';
+    }
+  }
+  document.getElementById('adminLoginBtn').addEventListener('click', attemptAdminLogin);
+  document.getElementById('adminPass').addEventListener('keydown', (e)=>{
+    if(e.key === 'Enter') attemptAdminLogin();
+  });
+
+  let allRsvps = [];
+  let editingId = null;
+
+  function loadRsvps(){
+    rsvpsRef.on('value', (snapshot)=>{
+      const data = snapshot.val() || {};
+      allRsvps = Object.keys(data).map(key => ({ id: key, ...data[key] }));
+      allRsvps.sort((a,b)=> (b.timestamp||0) - (a.timestamp||0));
+      renderTable();
+    });
+  }
+
+  function renderTable(){
+    const searchTerm = document.getElementById('searchInput').value.toLowerCase().trim();
+    const filterVal = document.getElementById('filterSelect').value;
+
+    let filtered = allRsvps.filter(r=>{
+      const fullName = `${r.firstName} ${r.lastName}`.toLowerCase();
+      const matchesSearch = !searchTerm || fullName.includes(searchTerm);
+      const matchesFilter = filterVal === 'all' || r.attendance === filterVal;
+      return matchesSearch && matchesFilter;
+    });
+
+    // Stats always based on full dataset
+    const total = allRsvps.length;
+    const attendingOnly = allRsvps.filter(r=>r.attendance === 'attending').length;
+    const attendingSpouse = allRsvps.filter(r=>r.attendance === 'attending_spouse').length;
+    const totalGuests = allRsvps.reduce((sum, r)=>{
+      if(r.attendance === 'attending') return sum + 1;
+      if(r.attendance === 'attending_spouse') return sum + 2;
+      return sum;
+    }, 0);
+
+    document.getElementById('statAttending').textContent = attendingOnly;
+    document.getElementById('statAttendingSpouse').textContent = attendingSpouse;
+    document.getElementById('statTotal').textContent = total;
+    document.getElementById('statGuests').textContent = totalGuests;
+
+    const tbody = document.getElementById('rsvpTableBody');
+    const emptyState = document.getElementById('emptyState');
+    tbody.innerHTML = '';
+
+    if(filtered.length === 0){
+      emptyState.style.display = 'block';
+      return;
+    }
+    emptyState.style.display = 'none';
+
+    const statusMap = {
+      attending: { label: 'Attending', cls: 'yes' },
+      attending_spouse: { label: 'With Spouse', cls: 'spouse' },
+      not_attending: { label: 'Not Attending', cls: 'no' }
+    };
+
+    filtered.forEach(r=>{
+      const tr = document.createElement('tr');
+      const dateStr = r.timestamp ? new Date(r.timestamp).toLocaleDateString('en-US', { month:'short', day:'numeric', year:'numeric' }) : '';
+
+      if(editingId === r.id){
+        tr.classList.add('editing-row');
+        tr.innerHTML = `
+          <td data-label="Name">
+            <input class="edit-input" type="text" id="edit-first-${r.id}" value="${escapeAttr(r.firstName)}" placeholder="First name" style="margin-bottom:6px;">
+            <input class="edit-input" type="text" id="edit-last-${r.id}" value="${escapeAttr(r.lastName)}" placeholder="Last name">
+          </td>
+          <td data-label="Status">
+            <select class="edit-input" id="edit-status-${r.id}">
+              <option value="attending" ${r.attendance==='attending'?'selected':''}>Attending</option>
+              <option value="attending_spouse" ${r.attendance==='attending_spouse'?'selected':''}>Attending with Spouse</option>
+              <option value="not_attending" ${r.attendance==='not_attending'?'selected':''}>Not Attending</option>
+            </select>
+          </td>
+          <td data-label="Guests">${r.attendance === 'attending' ? 1 : r.attendance === 'attending_spouse' ? 2 : 0}</td>
+          <td data-label="Submitted">${dateStr}</td>
+          <td data-label="">
+            <div class="row-actions">
+              <button class="save-btn" data-id="${r.id}">Save</button>
+              <button class="cancel-btn" data-id="${r.id}">Cancel</button>
+            </div>
+          </td>
+        `;
+      } else {
+        const status = statusMap[r.attendance] || { label: r.attendance, cls: '' };
+        const guestCount = r.attendance === 'attending' ? 1 : r.attendance === 'attending_spouse' ? 2 : 0;
+        tr.innerHTML = `
+          <td data-label="Name">${escapeHtml(r.firstName)} ${escapeHtml(r.lastName)}</td>
+          <td data-label="Status"><span class="badge ${status.cls}">${status.label}</span></td>
+          <td data-label="Guests">${guestCount}</td>
+          <td data-label="Submitted">${dateStr}</td>
+          <td data-label="">
+            <div class="row-actions">
+              <button class="edit-btn" data-id="${r.id}">Edit</button>
+              <button class="del-btn" data-id="${r.id}">Delete</button>
+            </div>
+          </td>
+        `;
+      }
+      tbody.appendChild(tr);
+    });
+
+    tbody.querySelectorAll('.del-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        if(confirm('Delete this RSVP?')){
+          rsvpsRef.child(btn.dataset.id).remove();
+        }
+      });
+    });
+
+    tbody.querySelectorAll('.edit-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        editingId = btn.dataset.id;
+        renderTable();
+      });
+    });
+
+    tbody.querySelectorAll('.cancel-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        editingId = null;
+        renderTable();
+      });
+    });
+
+    tbody.querySelectorAll('.save-btn').forEach(btn=>{
+      btn.addEventListener('click', ()=>{
+        const id = btn.dataset.id;
+        const firstName = document.getElementById(`edit-first-${id}`).value.trim();
+        const lastName = document.getElementById(`edit-last-${id}`).value.trim();
+        const attendance = document.getElementById(`edit-status-${id}`).value;
+
+        if(!firstName || !lastName){
+          alert('First and last name are required.');
+          return;
+        }
+
+        const normFirst = normalizeName(firstName);
+        const normLast = normalizeName(lastName);
+        const isDuplicate = allRsvps.some(r =>
+          r.id !== id && normalizeName(r.firstName) === normFirst && normalizeName(r.lastName) === normLast
+        );
+        if(isDuplicate && !confirm('Another RSVP already exists under this name. Save anyway?')){
+          return;
+        }
+
+        rsvpsRef.child(id).update({
+          firstName,
+          lastName,
+          attendance
+        }).then(()=>{
+          editingId = null;
+        }).catch((err)=>{
+          alert('Failed to save changes.');
+          console.error(err);
+        });
+      });
+    });
+  }
+
+  function escapeHtml(str){
+    const div = document.createElement('div');
+    div.textContent = str || '';
+    return div.innerHTML;
+  }
+
+  function escapeAttr(str){
+    return (str || '')
+      .replace(/&/g, '&amp;')
+      .replace(/"/g, '&quot;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;');
+  }
+
+  document.getElementById('searchInput').addEventListener('input', renderTable);
+  document.getElementById('filterSelect').addEventListener('change', renderTable);
+  document.getElementById('refreshBtn').addEventListener('click', renderTable);
+
+  document.getElementById('exportBtn').addEventListener('click', ()=>{
+    let csv = 'First Name,Last Name,Status,Guests,Submitted\n';
+    allRsvps.forEach(r=>{
+      const statusLabel = { attending:'Attending', attending_spouse:'Attending with Spouse', not_attending:'Not Attending' }[r.attendance] || r.attendance;
+      const guestCount = r.attendance === 'attending' ? 1 : r.attendance === 'attending_spouse' ? 2 : 0;
+      const dateStr = r.timestamp ? new Date(r.timestamp).toISOString() : '';
+      csv += `"${(r.firstName||'').replace(/"/g,'""')}","${(r.lastName||'').replace(/"/g,'""')}","${statusLabel}","${guestCount}","${dateStr}"\n`;
+    });
+    const blob = new Blob([csv], { type: 'text/csv' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = 'hatzolah-gala-rsvps.csv';
+    a.click();
+    URL.revokeObjectURL(url);
+  });
 </script>
+
 </body>
 </html>
